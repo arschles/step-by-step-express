@@ -1,0 +1,40 @@
+name: step-seven-aks
+
+on:
+  push:
+    branches:
+    - main
+    paths:
+    - step-seven/*
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+    - name: Get AKS credentials
+      uses: azure/CLI@v1
+      with:
+        azcliversion: 2.0.72
+        inlineScript: |
+          az aks get-credentials -n athens-stage -g athens
+    - name: Move Kubeconfig
+      run: | 
+        cp ~/.kube/config 
+    - name: Deploy
+      uses: WyriHaximus/github-action-helm3@v1
+      with:
+        exec: |
+          helm upgrade xkcd \
+            ./step-seven/charts \
+            --install \
+            --wait \
+            --atomic \
+            --namespace=xkcd \
+            --set=app.name=xkcd \
+            --values=./step-seven/chart/values.yaml
+        # kubeconfig: '${{ secrets.KUBECONFIG }}'
+        kubeconfig: '$(cat ~/.kube/config)'
