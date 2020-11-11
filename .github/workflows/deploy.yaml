@@ -30,7 +30,7 @@ jobs:
           KUBECONFIG=$(cat /root/.kube/config)
           echo "KUBECONFIG=$KUBECONFIG" >> $GITHUB_ENV
     - name: Deploy
-      uses: deliverybot/helm # TODO: what version number???
+      uses: deliverybot/helm@v1 # TODO: what version number???
       with:
         release: 'xkcd'
         namespace: 'xkcd'
