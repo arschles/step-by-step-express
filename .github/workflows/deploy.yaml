@@ -12,6 +12,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v1
+    # setting this up:
+    # https://github.com/Azure/login
     - uses: azure/login@v1
       with:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
@@ -21,9 +23,6 @@ jobs:
         azcliversion: 2.0.72
         inlineScript: |
           az aks get-credentials -n athens-stage -g athens
-    - name: Move Kubeconfig
-      run: | 
-        cp ~/.kube/config 
     - name: Deploy
       uses: deliverybot/helm # TODO: what version number???
       with:
