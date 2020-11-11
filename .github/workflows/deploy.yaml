@@ -19,12 +19,12 @@ jobs:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
     # could possibly use this instead
     # https://github.com/Azure/aks-set-context
-    # - name: Get AKS credentials
-    #   uses: azure/CLI@v1
-    #   with:
-    #     azcliversion: 2.0.72
-    #     inlineScript: |
-    #       az aks get-credentials -n athens-stage -g athens
+    - name: Get AKS credentials
+      uses: azure/CLI@v1
+      with:
+        azcliversion: 2.0.72
+        inlineScript: |
+          az aks get-credentials -n athens-stage -g athens
     # - name: Deploy
     #   uses: deliverybot/helm # TODO: what version number???
     #   with:
