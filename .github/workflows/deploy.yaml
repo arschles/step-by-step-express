@@ -17,6 +17,8 @@ jobs:
     - uses: azure/login@v1
       with:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
+    # could possibly use this instead
+    # https://github.com/Azure/aks-set-context
     - name: Get AKS credentials
       uses: azure/CLI@v1
       with:
